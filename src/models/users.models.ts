@@ -50,6 +50,23 @@ class usersDbProcedures {
         return users;
     }
 
+    public async updateUser(user: user): Promise<user[]> {
+        const users: any = await this.db.query('CALL updateUser(:firstName, :LastNam, :dateBirth, :address, :password, :phone, :email, :id)', {
+            replacements: {
+                firstName: user.first_name,
+                LastNam: user.last_name,
+                dateBirth: user.date_birth,
+                address: user.address,
+                password: user.password,
+                phone: user.mobile_phone,
+                email: user.email,
+                id: user.id
+            }
+        }) as { users: Array<user> }[];
+
+        return users;
+    }
+
 }
 
 export default new usersDbProcedures();

@@ -25,4 +25,15 @@ router.post('/', [
     verifyReuest.validAdress
 ], usersController.createtUser);
 
+router.put('/:id_user', [
+    validateAccessToken,
+    verifyReuest.validFirstName,
+    verifyReuest.validLastName,
+    verifyReuest.validDateBirth,
+    verifyReuest.validPhone,
+    verifyReuest.validDateEmail,
+    verifyReuest.validPassword,
+    verifyReuest.validAdress
+], usersController.updatetUser);
+
 export = router;

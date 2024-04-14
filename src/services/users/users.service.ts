@@ -143,3 +143,76 @@ export const createUser = async (user: user) => {
         }
     }
 }
+
+export const updatetUserUser = async (user: user, id_user: number) => {
+    try {
+
+        const usersId: user[] = await usersDbProcedures.getUserById(id_user);
+
+        if(usersId.length < 1){
+            return {
+                status: 400,
+                message: 'El usuario no existe'
+            }
+        }
+
+        const userId: user = usersId[0];
+
+        if(userId.mobile_phone !== user.mobile_phone){
+            const userPhone: user[] = await usersDbProcedures.getUserByPhone(user.mobile_phone);
+
+            if(userPhone.length > 0){
+                return {
+                    status: 400,
+                    message: `El usuario con el numero ${user.mobile_phone} ya se encuentra registrado`
+                }
+            }
+        }
+
+        const updateUser: user = {
+            ...user,
+            password: encryptPassword(user.password),
+            id: id_user
+        }
+
+        const users: user[] = await usersDbProcedures.updateUser(updateUser);
+
+        if(users.length < 1){
+            return {
+                status: 400,
+                message: 'Error en al edición del usuario, por favor intenlo mas tarde'
+            }
+        }
+
+        let userReturn: getUser | null = null;
+
+        for(let i = 0; i < users.length; i++){
+
+            const user: user = users[i];
+
+            userReturn = {
+                id: user.id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                date_birth: user.date_birth,
+                mobile_phone: user.mobile_phone,
+                email: user.email,
+                address: user.address,
+                session_active: user.token == '' ? false : true
+            }
+
+        } 
+        
+        return {
+            status: 200,
+            message: 'Usuario creado con exito',
+            data: userReturn
+        }
+        
+    } catch (error) {
+        return {
+            status: 500,
+            message: `Error en el servidor: ${error}`
+        }
+    }
+}

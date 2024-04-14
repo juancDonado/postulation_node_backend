@@ -21,7 +21,7 @@ class JWTService {
 
     public validateAccessJWT(accessToken: any): any {
         try {
-            const { playload }: any = jwt.verify(accessToken, process.env.JWT_KEY_FOR_ACCESS_TOKEN!)
+            const { playload }: any = jwt.verify(accessToken, process.env.JSON_WEB_TOKEN_KEY!)
 
             const response = { success: true, playload }
 

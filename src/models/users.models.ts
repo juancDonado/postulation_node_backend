@@ -34,6 +34,22 @@ class usersDbProcedures {
         return users;
     }
 
+    public async createUser(user: user): Promise<user[]> {
+        const users: any = await this.db.query('CALL createUser(:firstName, :LastNam, :dateBirth, :address, :password, :phone, :email)', {
+            replacements: {
+                firstName: user.first_name,
+                LastNam: user.last_name,
+                dateBirth: user.date_birth,
+                address: user.address,
+                password: user.password,
+                phone: user.mobile_phone,
+                email: user.email
+            }
+        }) as { users: Array<user> }[];
+
+        return users;
+    }
+
 }
 
 export default new usersDbProcedures();

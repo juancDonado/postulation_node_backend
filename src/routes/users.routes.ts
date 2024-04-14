@@ -1,6 +1,7 @@
 import Router from 'express';
 import verifyReuest from '../middlewares/verifyRequest';
 import usersController from '../controllers/users.controllers';
+import { validateAccessToken } from '../helpers/token.helper';
 
 const router = Router();
 
@@ -11,6 +12,17 @@ router.post('/login',[
 
 router.get('/', usersController.getUsers);
 
-router.get('/:id_user', usersController.getUser);
+router.get('/:id_user', validateAccessToken, usersController.getUser);
+
+router.post('/', [
+    validateAccessToken,
+    verifyReuest.validFirstName,
+    verifyReuest.validLastName,
+    verifyReuest.validDateBirth,
+    verifyReuest.validPhone,
+    verifyReuest.validDateEmail,
+    verifyReuest.validPassword,
+    verifyReuest.validAdress
+], usersController.createtUser);
 
 export = router;

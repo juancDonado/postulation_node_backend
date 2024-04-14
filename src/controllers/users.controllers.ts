@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ResponseInterface } from '../interfaces/responseInterface';
 import { loginService } from '../services/users/login.service';
-import { createUser, getuser, getusers, updatetUserUser } from '../services/users/users.service';
+import { createUser, deleteUserUser, getuser, getusers, updatetUserUser } from '../services/users/users.service';
 import { user } from '../interfaces/usersInteface';
 
 class usersController {
@@ -79,6 +79,23 @@ class usersController {
             const id_user = req.params.id_user;
 
             const response: ResponseInterface = await updatetUserUser(user, Number(id_user));
+            return res.status(response.status).json(response);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: 'Erro al consultar los totales.'
+            });
+        }
+    }
+
+    deleteUser = async (req: Request, res: Response) => {
+        try {
+
+            const id_user = req.params.id_user;
+
+            const response: ResponseInterface = await deleteUserUser(Number(id_user));
             return res.status(response.status).json(response);
             
         } catch (error) {

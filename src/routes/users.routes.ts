@@ -36,4 +36,6 @@ router.put('/:id_user', [
     verifyReuest.validAdress
 ], usersController.updatetUser);
 
+router.delete('/:id_user', validateAccessToken, usersController.deleteUser);
+
 export = router;

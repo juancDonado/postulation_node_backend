@@ -67,6 +67,16 @@ class usersDbProcedures {
         return users;
     }
 
+    public async deleteUserById(id: number): Promise<any> {
+        const users: any = await this.db.query('CALL deleteUserById(:id)', {
+            replacements: {
+                id: id
+            }
+        }) as { users: any}[];
+
+        return users;
+    }
+
 }
 
 export default new usersDbProcedures();

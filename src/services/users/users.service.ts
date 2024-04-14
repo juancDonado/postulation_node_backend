@@ -205,8 +205,35 @@ export const updatetUserUser = async (user: user, id_user: number) => {
         
         return {
             status: 200,
-            message: 'Usuario creado con exito',
+            message: 'Usuario actualizado con exito',
             data: userReturn
+        }
+        
+    } catch (error) {
+        return {
+            status: 500,
+            message: `Error en el servidor: ${error}`
+        }
+    }
+}
+
+export const deleteUserUser = async (id_user: number) => {
+    try {
+
+        const usersId: user[] = await usersDbProcedures.getUserById(id_user);
+
+        if(usersId.length < 1){
+            return {
+                status: 400,
+                message: 'El usuario no existe'
+            }
+        }
+
+        await usersDbProcedures.deleteUserById(id_user);
+        
+        return {
+            status: 200,
+            message: 'Usuario eliminado con exito'
         }
         
     } catch (error) {

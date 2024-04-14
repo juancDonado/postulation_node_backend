@@ -1,0 +1,59 @@
+import { Request, Response } from 'express';
+import { ResponseInterface } from '../interfaces/responseInterface';
+import { loginService } from '../services/users/login.service';
+import { getuser, getusers } from '../services/users/getUsers.service';
+
+class usersController {
+
+    login = async (req: Request, res: Response) => {
+        try {
+
+            const { phone, password } = req.body;
+
+            const response: ResponseInterface = await loginService(phone, password);
+            return res.status(response.status).json(response);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: 'Erro al consultar los totales.'
+            });
+        }
+    }
+
+    getUsers = async (req: Request, res: Response) => {
+        try {
+
+            const response: ResponseInterface = await getusers();
+            return res.status(response.status).json(response);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: 'Erro al consultar los totales.'
+            });
+        }
+    }
+
+    getUser = async (req: Request, res: Response) => {
+        try {
+
+            const id_user = req.params.id_user;
+
+            const response: ResponseInterface = await getuser(Number(id_user));
+            return res.status(response.status).json(response);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: 'Erro al consultar los totales.'
+            });
+        }
+    }
+
+}
+
+export = new usersController();

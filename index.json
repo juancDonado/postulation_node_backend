@@ -1,0 +1,14 @@
+{
+
+    "apps": [
+  
+      {
+  
+        "name": "[DEV] test (6000)",
+  
+        "script": "./dist/src/app.js"
+  
+      }
+  
+    ]
+}

@@ -77,6 +77,18 @@ class usersDbProcedures {
         return users;
     }
 
+    public async updateTokenByUserId(id: number, token: string): Promise<any> {
+
+        const users: any = await this.db.query('CALL updateTokenByUserId(:id, :token)', {
+            replacements: {
+                id: id,
+                token: token
+            }
+        }) as { users: any}[];
+
+        return users;
+    }
+
 }
 
 export default new usersDbProcedures();

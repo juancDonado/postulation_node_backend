@@ -38,4 +38,6 @@ router.put('/:id_user', [
 
 router.delete('/:id_user', validateAccessToken, usersController.deleteUser);
 
+router.put('/loggout/:id_user', validateAccessToken, usersController.loggout);
+
 export = router;

@@ -36,8 +36,6 @@ export const loginService = async (phone: string, password: string) => {
 
         const token = JWTService.generateJWT(playload);
 
-        console.log(token);
-
         if(!token){
             return {
                 status: 500,
@@ -45,12 +43,43 @@ export const loginService = async (phone: string, password: string) => {
             }
         }
 
+        await usersDbProcedures.updateTokenByUserId(userLogin.id, token);
+
         return {
             status: 200,
             message: 'Inicio de sesión exitoso',
             user: userLogin,
             access_token: token,
             token_type: 'bearer'
+        }
+        
+    } catch (error) {
+        return {
+            status: 500,
+            message: `Error en el servidor: ${error}`
+        }
+    }
+
+}
+
+export const logoutnService = async (id_user: number) => {
+
+    try {
+
+        const users: user[] = await usersDbProcedures.getUserById(id_user);
+
+        if(users.length < 1){
+            return {
+                status: 400,
+                message: 'El usuario no existe'
+            }
+        }
+
+        await usersDbProcedures.updateTokenByUserId(id_user, '');
+
+        return {
+            status: 200,
+            message: 'Cerrado de sesión exitoso'
         }
         
     } catch (error) {

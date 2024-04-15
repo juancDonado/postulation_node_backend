@@ -9,8 +9,8 @@ DB
 
 BACK-END
 1. Instalación de dependencias con el comando npm install o npm -i
-2. Configuración de la base de datos
-	2.1. Revisar el archivo .env.
-	2.2. Cambiar el host por el de su preferencia, actuamente se encuentra en localhost.
-	2.3. Cambiar al ususario y contraseña mysql de su equipo.
+2. Configuración de la base de datos.
+3. Revisar el archivo .env.
+4. Cambiar el host por el de su preferencia, actuamente se encuentra en localhost.
+5. Cambiar al ususario y contraseña mysql de su equipo.
 
